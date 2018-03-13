@@ -707,7 +707,7 @@ public:
 
   void operator()()
   {
-    *iter_;
+    BOOST_ASIO_UNUSED_VARIABLE auto result = *iter_;
   }
 
 private:
