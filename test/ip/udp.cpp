@@ -246,11 +246,11 @@ void test()
     socket1.native_non_blocking(true);
     socket1.native_non_blocking(false, ec);
 
-    ip::udp::endpoint endpoint1 = socket1.local_endpoint();
-    ip::udp::endpoint endpoint2 = socket1.local_endpoint(ec);
+    BOOST_ASIO_UNUSED_VARIABLE ip::udp::endpoint endpoint1 = socket1.local_endpoint();
+    BOOST_ASIO_UNUSED_VARIABLE ip::udp::endpoint endpoint2 = socket1.local_endpoint(ec);
 
-    ip::udp::endpoint endpoint3 = socket1.remote_endpoint();
-    ip::udp::endpoint endpoint4 = socket1.remote_endpoint(ec);
+    BOOST_ASIO_UNUSED_VARIABLE ip::udp::endpoint endpoint3 = socket1.remote_endpoint();
+    BOOST_ASIO_UNUSED_VARIABLE ip::udp::endpoint endpoint4 = socket1.remote_endpoint(ec);
 
     socket1.shutdown(socket_base::shutdown_both);
     socket1.shutdown(socket_base::shutdown_both, ec);

@@ -129,11 +129,11 @@ void test()
     socket1.io_control(io_control_command);
     socket1.io_control(io_control_command, ec);
 
-    dp::endpoint endpoint1 = socket1.local_endpoint();
-    dp::endpoint endpoint2 = socket1.local_endpoint(ec);
+    BOOST_ASIO_UNUSED_VARIABLE dp::endpoint endpoint1 = socket1.local_endpoint();
+    BOOST_ASIO_UNUSED_VARIABLE dp::endpoint endpoint2 = socket1.local_endpoint(ec);
 
-    dp::endpoint endpoint3 = socket1.remote_endpoint();
-    dp::endpoint endpoint4 = socket1.remote_endpoint(ec);
+    BOOST_ASIO_UNUSED_VARIABLE dp::endpoint endpoint3 = socket1.remote_endpoint();
+    BOOST_ASIO_UNUSED_VARIABLE dp::endpoint endpoint4 = socket1.remote_endpoint(ec);
 
     socket1.shutdown(socket_base::shutdown_both);
     socket1.shutdown(socket_base::shutdown_both, ec);
