@@ -378,11 +378,11 @@ void test()
     socket1.native_non_blocking(true);
     socket1.native_non_blocking(false, ec);
 
-    ip::tcp::endpoint endpoint1 = socket1.local_endpoint();
-    ip::tcp::endpoint endpoint2 = socket1.local_endpoint(ec);
+    BOOST_ASIO_UNUSED_VARIABLE ip::tcp::endpoint endpoint1 = socket1.local_endpoint();
+    BOOST_ASIO_UNUSED_VARIABLE ip::tcp::endpoint endpoint2 = socket1.local_endpoint(ec);
 
-    ip::tcp::endpoint endpoint3 = socket1.remote_endpoint();
-    ip::tcp::endpoint endpoint4 = socket1.remote_endpoint(ec);
+    BOOST_ASIO_UNUSED_VARIABLE ip::tcp::endpoint endpoint3 = socket1.remote_endpoint();
+    BOOST_ASIO_UNUSED_VARIABLE ip::tcp::endpoint endpoint4 = socket1.remote_endpoint(ec);
 
     socket1.shutdown(socket_base::shutdown_both);
     socket1.shutdown(socket_base::shutdown_both, ec);
@@ -915,8 +915,8 @@ void test()
     acceptor1.native_non_blocking(true);
     acceptor1.native_non_blocking(false, ec);
 
-    ip::tcp::endpoint endpoint1 = acceptor1.local_endpoint();
-    ip::tcp::endpoint endpoint2 = acceptor1.local_endpoint(ec);
+    BOOST_ASIO_UNUSED_VARIABLE ip::tcp::endpoint endpoint1 = acceptor1.local_endpoint();
+    BOOST_ASIO_UNUSED_VARIABLE ip::tcp::endpoint endpoint2 = acceptor1.local_endpoint(ec);
 
     acceptor1.wait(socket_base::wait_read);
     acceptor1.wait(socket_base::wait_write, ec);
