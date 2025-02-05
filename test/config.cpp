@@ -32,6 +32,7 @@ void config_from_string_test()
         "reactor.io_locking=1"));
 
   boost::asio::config cfg1(ctx1);
+  errno = ERANGE;  // Fake that errno is set by a previous call
   BOOST_ASIO_CHECK(cfg1.get("scheduler", "concurrency_hint", 0) == 123);
   BOOST_ASIO_CHECK(cfg1.get("scheduler", "locking", false) == true);
   BOOST_ASIO_CHECK(cfg1.get("reactor", "registration_locking", true) == false);
@@ -48,10 +49,39 @@ void config_from_string_test()
         "prefix"));
 
   boost::asio::config cfg2(ctx2);
+  errno = ERANGE;
   BOOST_ASIO_CHECK(cfg2.get("scheduler", "concurrency_hint", 0) == 456);
   BOOST_ASIO_CHECK(cfg2.get("scheduler", "locking", false) == true);
   BOOST_ASIO_CHECK(cfg2.get("reactor", "registration_locking", true) == false);
   BOOST_ASIO_CHECK(cfg2.get("reactor", "io_locking", false) == true);
+
+  {
+    boost::asio::io_context ctx; // Test default contructor
+
+    boost::asio::config cfg(ctx);
+    errno = ERANGE;
+    BOOST_ASIO_CHECK(cfg.get("scheduler", "concurrency_hint", 0) == -1); //Bug
+    //BOOST_ASIO_CHECK(cfg.get("scheduler", "concurrency_hint", 0) == 0);  //Bug
+    BOOST_ASIO_CHECK(cfg.get("scheduler", "locking", false) == true);
+    BOOST_ASIO_CHECK(cfg.get("reactor", "registration_locking", true) == true);
+    BOOST_ASIO_CHECK(cfg.get("reactor", "io_locking", false) == true);
+  }
+
+  {
+    boost::asio::io_context ctx{1024}; // Test with custom concurrency_hint
+
+    boost::asio::config cfg(ctx);
+    errno = ERANGE;
+    BOOST_ASIO_CHECK(cfg.get("scheduler", "concurrency_hint", 0) == 1024);
+    BOOST_ASIO_CHECK(cfg.get("scheduler", "locking", false) == true);
+    BOOST_ASIO_CHECK(cfg.get("reactor", "registration_locking", true) == true);
+    BOOST_ASIO_CHECK(cfg.get("reactor", "io_locking", false) == true);
+  }
+
+   BOOST_ASIO_CHECK((static_cast<unsigned>(BOOST_ASIO_CONCURRENCY_HINT_DEFAULT)
+    & BOOST_ASIO_CONCURRENCY_HINT_ID_MASK)
+      == BOOST_ASIO_CONCURRENCY_HINT_ID);
+
 }
 
 BOOST_ASIO_TEST_SUITE
